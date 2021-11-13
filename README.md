@@ -1,6 +1,6 @@
 # DISCLAIMER: 
 
-This tool is only to be used on your own machines and for ethical purposes only. I cannot be held responsible for misuse of this tool. Misuse can result in criminal charges being brought against the persons in question. Please use this tool responsibly.
+This tool is only to be used on your own machines and for ethical purposes only. It has been developed for educational purposes only. I cannot be held responsible for misuse of this tool. Misuse can result in criminal charges being brought against the persons in question. Please use this tool responsibly.
 
 # Windows-WiFi-Password-Getter
 
