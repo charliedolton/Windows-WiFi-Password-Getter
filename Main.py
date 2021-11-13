@@ -1,3 +1,5 @@
+# Adapted from a couple NeuralNine videos
+
 import subprocess
 import smtplib
 from email.mime.text import MIMEText
