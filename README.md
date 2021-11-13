@@ -1,3 +1,7 @@
+# DISCLAIMER: 
+
+This tool is only to be used on your own machines and ethical purposes only. I cannot be held responsible for misuse of this tool. Misuse can result in criminal charges being brought against the persons in question. Please use this tool responsibly.
+
 # Windows-WiFi-Password-Getter
 
 This is a python payload that if run on any windows computer will return the names and passwords of every wifi network the PC has connected to in the form of an email. 
